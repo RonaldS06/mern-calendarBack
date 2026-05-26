@@ -5,6 +5,8 @@ const cors = require('cors')
 
 require('dotenv').config();
 
+const path = require('path');
+
 //2- Crear el servidor de express
 const app = express();
 
@@ -25,6 +27,10 @@ app.use( express.json() );
 //Todo lo relacionado a autenticación estara en esta ruta.
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
+
+app.use(/.*/,  (req, res) => {
+    res.sendFile( path.join(__dirname, 'public/index.html') );
+});
 
 //4- Escuchar peticiones
 app.listen(process.env.PORT, () => {
